@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "BlindChessApp",
-    "slug": "BlindChessApp",
+    "slug": "blindchessapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.palermo4561.blindchessapp"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d6887427-e7a2-4bd8-86aa-4bea0829738b"
+      }
+    },
+    "owner": "palermo4561"
   }
 }
