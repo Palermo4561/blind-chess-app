@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "BlindChessApp",
-    "slug": "blindchessapp",
+    "name": "Blind Chess App",
+    "slug": "blind-chess-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "blindchessapp",
+    "scheme": "blind-chess-app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -17,7 +17,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.palermo4561.blindchessapp"
+      "package": "com.palermo4561.blind-chess-app"
     },
     "web": {
       "bundler": "metro",
