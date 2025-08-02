@@ -1,7 +1,5 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit",
-    "source.sortMembers": "explicit"
-  }
+  "tailwindCSS.experimental.classRegex": ["tv\\(([^)]*)\\)", "\\b(?!tv\\b)[^\\s`'\"()]*[\\s`'\"()]*class:\"([^\"]*)\""],
+  "postman.settings.dotenv-detection-notification-visibility": false,
+  "cSpell.words": ["nativewind", "trivago"]
 }

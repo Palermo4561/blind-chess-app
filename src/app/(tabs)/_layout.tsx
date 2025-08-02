@@ -1,42 +1,40 @@
-import { Tabs } from "expo-router";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { Tabs } from 'expo-router'
 
 export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="games"
+        name='games'
         options={{
-          title: "Games",
+          title: 'Games',
         }}
       />
       <Tabs.Screen
-        name="training"
+        name='training'
         options={{
-          title: "Training",
+          title: 'Training',
         }}
       />
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
-          title: "Featured",
-          tabBarIcon: ({ color }) => (
-            <FontAwesomeIcon icon="chess" color={color} />
-          ),
+          title: 'Featured',
+          tabBarIcon: ({ color }) => <FontAwesomeIcon icon='chess' color={color} />,
         }}
       />
       <Tabs.Screen
-        name="awards"
+        name='awards'
         options={{
-          title: "Awards",
+          title: 'Awards',
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name='settings'
         options={{
-          title: "Settings",
+          title: 'Settings',
         }}
       />
     </Tabs>
-  );
+  )
 }

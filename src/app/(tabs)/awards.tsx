@@ -1,5 +1,5 @@
-import { Text } from "react-native";
+import { Text } from 'react-native'
 
 export default function Awards() {
-  return <Text>Awards</Text>;
+  return <Text>Awards</Text>
 }
