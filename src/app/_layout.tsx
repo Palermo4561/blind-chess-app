@@ -1,6 +1,10 @@
 // adding FontAwesome icons to the a library
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChess } from '@fortawesome/free-solid-svg-icons/faChess'
+import { faChessBoard } from '@fortawesome/free-solid-svg-icons/faChessBoard'
+import { faDumbbell } from '@fortawesome/free-solid-svg-icons/faDumbbell'
+import { faGear } from '@fortawesome/free-solid-svg-icons/faGear'
+import { faTrophy } from '@fortawesome/free-solid-svg-icons/faTrophy'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
@@ -9,7 +13,7 @@ import { useColorScheme } from 'react-native'
 // styles from NativeWind
 import '@/styles/global.css'
 
-library.add(faChess)
+library.add(faChess, faGear, faTrophy, faChessBoard, faDumbbell)
 
 export default function RootLayout() {
   const colorScheme = useColorScheme()
