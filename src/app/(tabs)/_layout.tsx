@@ -1,4 +1,5 @@
 import { Tabs } from "expo-router";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 export default function TabLayout() {
   return (
@@ -6,19 +7,22 @@ export default function TabLayout() {
       <Tabs.Screen
         name="games"
         options={{
-          title: "Chess Games",
+          title: "Games",
         }}
       />
       <Tabs.Screen
         name="training"
         options={{
-          title: "Puzzles & Training",
+          title: "Training",
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
           title: "Featured",
+          tabBarIcon: ({ color }) => (
+            <FontAwesomeIcon icon="chess" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
