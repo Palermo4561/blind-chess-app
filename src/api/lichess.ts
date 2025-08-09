@@ -6,6 +6,9 @@ const axiosLichess = axios.create({
   headers: {
     Accept: 'application/x-ndjson',
   },
+  params: {
+    pgnInJson: true,
+  },
 })
 
 export async function fetchGamesForUser(username: string, maxGames: number) {
