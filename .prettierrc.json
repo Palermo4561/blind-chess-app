@@ -6,7 +6,7 @@
   "jsxSingleQuote": true,
   "printWidth": 120,
   "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
-  "importOrder": ["^@/.*", "^[./]"],
+  "importOrder": ["^~/.*", "^@/.*", "^[./]"],
   "tailwindAttributes": ["className"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true

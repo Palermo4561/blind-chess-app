@@ -11,24 +11,24 @@ interface ChessItemProps extends ViewProps {
 }
 
 export default function ChessItem({ chessBoardProps, game, className, ...props }: ChessItemProps) {
-  const chessProps: ChessboardProps = {
-    boardSize: 150,
-    gestureEnabled: false,
-    withLetters: false,
-    withNumbers: false,
-    colors: {
-      black: colors.yellow[800],
-      white: colors.orange[300],
-    },
-  }
-
   return (
     <View
       className={cn('m-5 flex flex-row justify-start rounded-lg bg-gray-500 p-3 align-middle', className)}
       {...props}
     >
       <View className='bg-black p-1'>
-        <Chessboard fen={game.lastFen} {...chessProps} {...chessBoardProps} />
+        <Chessboard
+          boardSize={150}
+          gestureEnabled={false}
+          withLetters={false}
+          withNumbers={false}
+          colors={{
+            black: colors.yellow[800],
+            white: colors.orange[300],
+          }}
+          fen={game.lastFen}
+          {...chessBoardProps}
+        />
       </View>
       <Text className='m-auto text-xl text-white'>Game Details</Text>
     </View>
