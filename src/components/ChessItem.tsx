@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View, ViewProps } from 'react-native'
+import { Text, View, ViewProps } from 'react-native'
 import Chessboard from 'react-native-chessboard'
 import { ChessboardProps } from 'react-native-chessboard/lib/typescript/context/props-context'
 import colors from 'tailwindcss/colors'
+
+import { cn } from '@/lib/utils'
 
 interface ChessItemProps extends ViewProps {
   game: any
@@ -21,20 +23,14 @@ export default function ChessItem({ chessBoardProps, game, className, ...props }
   }
 
   return (
-    <View style={[styles.container]} {...props}>
-      <Text className='text-white'>Chess Game: </Text>
-      <View>
+    <View
+      className={cn('m-5 flex flex-row justify-start rounded-lg bg-gray-500 p-3 align-middle', className)}
+      {...props}
+    >
+      <View className='bg-black p-1'>
         <Chessboard fen={game.lastFen} {...chessProps} {...chessBoardProps} />
       </View>
+      <Text className='m-auto text-xl text-white'>Game Details</Text>
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.amber[300],
-    padding: 10,
-    margin: 10,
-    borderRadius: 10,
-  },
-})

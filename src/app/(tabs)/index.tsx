@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import { fetchGamesForUser } from '@/api/lichess'
 import ChessItem from '@/components/ChessItem'
@@ -20,7 +20,6 @@ export default function Awards() {
 
   return (
     <View>
-      <Text>Games:</Text>
       {games.map((game: any, idx: number) => (
         <ChessItem key={idx} game={game} />
       ))}

@@ -12,9 +12,8 @@ import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { useColorScheme } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-
 // styles from NativeWind
-import '@/styles/global.css'
+import '~/global.css'
 
 library.add(faChess, faGear, faTrophy, faChessBoard, faDumbbell, faBell, faUser)
 

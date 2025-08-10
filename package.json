@@ -22,6 +22,7 @@
     "axios": "^1.11.0",
     "chess.js": "^1.4.0",
     "clsx": "^2.1.1",
+    "eslint-config-prettier": "^10.1.8",
     "expo": "^53.0.19",
     "expo-blur": "~14.1.5",
     "expo-constants": "~17.1.7",
@@ -62,7 +63,7 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "prettier-plugin-nativewind": "^0.2.3",
     "prettier-plugin-tailwind": "^2.2.12",
-    "prettier-plugin-tailwindcss": "^0.5.11",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.3"
   },
