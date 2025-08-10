@@ -12,3 +12,7 @@ export function pgnToFen(pgnString: string): string {
     throw Error(fenValidation.error)
   }
 }
+
+export function getNumberMoves(lichessGame: any): number {
+  return Math.ceil(lichessGame.moves.split(' ').length / 2)
+}

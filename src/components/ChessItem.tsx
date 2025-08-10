@@ -4,6 +4,7 @@ import { ChessboardProps } from 'react-native-chessboard/lib/typescript/context/
 import colors from 'tailwindcss/colors'
 
 import { cn } from '@/lib/utils'
+import { getNumberMoves } from '@/utils/chess'
 
 interface ChessItemProps extends ViewProps {
   game: any
@@ -13,7 +14,7 @@ interface ChessItemProps extends ViewProps {
 export default function ChessItem({ chessBoardProps, game, className, ...props }: ChessItemProps) {
   return (
     <View
-      className={cn('m-5 flex flex-row justify-start rounded-lg bg-gray-500 p-3 align-middle', className)}
+      className={cn('m-2 flex flex-row justify-start gap-2 rounded-lg bg-gray-500 p-3 align-middle', className)}
       {...props}
     >
       <View className='bg-black p-1'>
@@ -30,7 +31,15 @@ export default function ChessItem({ chessBoardProps, game, className, ...props }
           {...chessBoardProps}
         />
       </View>
-      <Text className='m-auto text-xl text-white'>Game Details</Text>
+      <View className='grow'>
+        <View className='px-auto rounded bg-green-400 p-3'>
+          <View className='flex flex-row justify-between'>
+            <Text className='text-xl'>Difficulty: </Text>
+            <Text className='text-xl underline'>Moderate</Text>
+          </View>
+        </View>
+        <Text className='mx-auto p-2 text-lg text-white'>Number moves: {getNumberMoves(game)}</Text>
+      </View>
     </View>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { Platform } from 'react-native'
+import Animated from 'react-native-reanimated'
 
 import { fetchGamesForUser } from '@/api/lichess'
 import ChessItem from '@/components/ChessItem'
@@ -12,17 +13,22 @@ export default function Awards() {
       const data = await fetchGamesForUser('DannytheDonkey', 5)
       setGames(data)
     }
-
     loadGames()
   }, [])
 
-  console.log(games)
+  console.log(games[0])
 
   return (
-    <View>
+    <Animated.ScrollView
+      showsVerticalScrollIndicator={Platform.select({
+        ios: false,
+        web: true,
+        default: true,
+      })}
+    >
       {games.map((game: any, idx: number) => (
         <ChessItem key={idx} game={game} />
       ))}
-    </View>
+    </Animated.ScrollView>
   )
 }
