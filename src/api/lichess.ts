@@ -8,6 +8,7 @@ const axiosLichess = axios.create({
   },
   params: {
     pgnInJson: true,
+    lastFen: true,
   },
 })
 
