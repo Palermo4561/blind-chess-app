@@ -22,8 +22,6 @@ export default function Awards() {
     setLoadedChessItems(games.map((game: LichessGame, idx: number) => <ChessItem key={idx} game={game} />))
   }, [games])
 
-  console.log(games[0])
-
   return (
     <Animated.ScrollView
       showsVerticalScrollIndicator={Platform.select({

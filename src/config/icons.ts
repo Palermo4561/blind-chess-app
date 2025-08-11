@@ -4,7 +4,8 @@ import { faChess } from '@fortawesome/free-solid-svg-icons/faChess'
 import { faChessBoard } from '@fortawesome/free-solid-svg-icons/faChessBoard'
 import { faDumbbell } from '@fortawesome/free-solid-svg-icons/faDumbbell'
 import { faGear } from '@fortawesome/free-solid-svg-icons/faGear'
+import { faHeadphones } from '@fortawesome/free-solid-svg-icons/faHeadphones'
 import { faTrophy } from '@fortawesome/free-solid-svg-icons/faTrophy'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 
-library.add(faChess, faGear, faTrophy, faChessBoard, faDumbbell, faBell, faUser)
+library.add(faChess, faGear, faTrophy, faChessBoard, faDumbbell, faBell, faUser, faHeadphones)

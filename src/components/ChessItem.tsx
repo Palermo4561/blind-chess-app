@@ -1,3 +1,5 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import React, { Suspense } from 'react'
 import { Text, View, ViewProps } from 'react-native'
 import { ChessboardProps } from 'react-native-chessboard/lib/typescript/context/props-context'
@@ -13,6 +15,25 @@ const Chessboard = React.lazy(() => import('react-native-chessboard'))
 interface ChessItemProps extends ViewProps {
   game: LichessGame
   chessBoardProps?: ChessboardProps
+}
+
+const TempButtonFramework = ({
+  className,
+  title,
+  iconString,
+}: {
+  className?: string
+  title: string
+  iconString: IconProp
+}) => {
+  return (
+    <View className={cn('m-2 flex-1 items-center rounded-xl bg-gray-200', className)}>
+      <View className='my-auto flex flex-col items-center'>
+        <FontAwesomeIcon icon={iconString} color={'black'} size={30} />
+        <Text className='my-auto font-bold text-white'>{title}</Text>
+      </View>
+    </View>
+  )
 }
 
 export default function ChessItem({ chessBoardProps, game, className, ...props }: ChessItemProps) {
@@ -45,6 +66,10 @@ export default function ChessItem({ chessBoardProps, game, className, ...props }
           </View>
         </View>
         <Text className='mx-auto p-2 text-lg text-white'>Number moves: {getNumberMoves(game)}</Text>
+        <View className='flex grow flex-row justify-center align-middle'>
+          <TempButtonFramework title={'Listen'} iconString={'headphones'} className='bg-blue-800' />
+          <TempButtonFramework title={'Train'} iconString={'dumbbell'} className='bg-red-600' />
+        </View>
       </View>
     </View>
   )
