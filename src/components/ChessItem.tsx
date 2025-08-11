@@ -1,13 +1,17 @@
+import React, { Suspense } from 'react'
 import { Text, View, ViewProps } from 'react-native'
-import Chessboard from 'react-native-chessboard'
 import { ChessboardProps } from 'react-native-chessboard/lib/typescript/context/props-context'
 import colors from 'tailwindcss/colors'
 
+import ChessboardFallback from '@/components/ChessboardFallback'
 import { cn } from '@/lib/utils'
+import { LichessGame } from '@/types/lichess'
 import { getNumberMoves } from '@/utils/chess'
 
+const Chessboard = React.lazy(() => import('react-native-chessboard'))
+
 interface ChessItemProps extends ViewProps {
-  game: any
+  game: LichessGame
   chessBoardProps?: ChessboardProps
 }
 
@@ -18,18 +22,20 @@ export default function ChessItem({ chessBoardProps, game, className, ...props }
       {...props}
     >
       <View className='bg-black p-1'>
-        <Chessboard
-          boardSize={150}
-          gestureEnabled={false}
-          withLetters={false}
-          withNumbers={false}
-          colors={{
-            black: colors.yellow[800],
-            white: colors.orange[300],
-          }}
-          fen={game.lastFen}
-          {...chessBoardProps}
-        />
+        <Suspense fallback={<ChessboardFallback />}>
+          <Chessboard
+            boardSize={150}
+            gestureEnabled={false}
+            withLetters={false}
+            withNumbers={false}
+            colors={{
+              black: colors.yellow[800],
+              white: colors.orange[300],
+            }}
+            fen={game.lastFen}
+            {...chessBoardProps}
+          />
+        </Suspense>
       </View>
       <View className='grow'>
         <View className='px-auto rounded bg-green-400 p-3'>

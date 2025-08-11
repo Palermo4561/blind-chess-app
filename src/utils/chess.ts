@@ -1,5 +1,7 @@
 import { Chess, validateFen } from 'chess.js'
 
+import { LichessGame } from '@/types/lichess'
+
 export function pgnToFen(pgnString: string): string {
   const chess = new Chess()
   chess.loadPgn(pgnString)
@@ -13,6 +15,6 @@ export function pgnToFen(pgnString: string): string {
   }
 }
 
-export function getNumberMoves(lichessGame: any): number {
+export function getNumberMoves(lichessGame: LichessGame): number {
   return Math.ceil(lichessGame.moves.split(' ').length / 2)
 }

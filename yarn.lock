@@ -1386,6 +1386,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@lichess-org/types@^2.0.67":
+  version "2.0.67"
+  resolved "https://registry.yarnpkg.com/@lichess-org/types/-/types-2.0.67.tgz#77a527f9b447eb100c4e1d80f0c61635462d9754"
+  integrity sha512-pMh6wBJt8XzC0/2+PEStvexZydN5KwG2u3as9G1b/N3qxk/I6A4FnvaRQBbtNW6b2T0JHT9wkZixFLXHU21d3A==
+
 "@napi-rs/wasm-runtime@^0.2.11":
   version "0.2.12"
   resolved "https://registry.yarnpkg.com/@napi-rs/wasm-runtime/-/wasm-runtime-0.2.12.tgz#3e78a8b96e6c33a6c517e1894efbd5385a7cb6f2"
