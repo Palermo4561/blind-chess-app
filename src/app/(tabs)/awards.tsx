@@ -10,7 +10,7 @@ export default function Awards() {
   const SpeakButton = ({ text }: { text: string }) => {
     return (
       <Text
-        className='font-8xl mx-auto my-2 p-3 text-blue-700'
+        className='mx-auto my-2 p-3 text-2xl text-blue-700'
         onPress={() => readChessMove(text, { voice, extensiveReading })}
       >
         {text}
