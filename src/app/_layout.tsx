@@ -8,6 +8,7 @@ import '~/global.css'
 
 import '@/config/icons'
 import '@/config/reanimated-logger'
+import { LoadedGamesProvider } from '@/contexts/LoadedGamesContext'
 import { SettingsProvider } from '@/contexts/SettingsContext'
 
 export default function RootLayout() {
@@ -16,18 +17,20 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <SettingsProvider>
-        <GestureHandlerRootView>
-          <Stack>
-            <Stack.Screen
-              name='(tabs)'
-              options={{
-                title: 'Home',
-                headerShown: false,
-              }}
-            />
-          </Stack>
-          <StatusBar style='auto' />
-        </GestureHandlerRootView>
+        <LoadedGamesProvider>
+          <GestureHandlerRootView>
+            <Stack>
+              <Stack.Screen
+                name='(tabs)'
+                options={{
+                  title: 'Home',
+                  headerShown: false,
+                }}
+              />
+            </Stack>
+            <StatusBar style='auto' />
+          </GestureHandlerRootView>
+        </LoadedGamesProvider>
       </SettingsProvider>
     </ThemeProvider>
   )

@@ -9,13 +9,13 @@ import colors from 'tailwindcss/colors'
 
 import ChessboardFallback from '@/components/ChessboardFallback'
 import { cn } from '@/lib/utils'
-import { LichessGame } from '@/types/lichess'
+import { GameAttributes } from '@/types/lichess'
 import { getNumberMoves } from '@/utils/chess'
 
 const Chessboard = React.lazy(() => import('react-native-chessboard'))
 
 interface ChessItemProps extends ViewProps {
-  game: LichessGame
+  game: GameAttributes
   chessBoardProps?: ChessboardProps
 }
 
@@ -66,7 +66,7 @@ export default function ChessItem({ chessBoardProps, game, className, ...props }
             <Text className='text-xl underline'>Moderate</Text>
           </View>
         </View>
-        <Text className='mx-auto p-2 text-lg text-white'>Number moves: {getNumberMoves(game)}</Text>
+        <Text className='mx-auto p-2 text-lg text-white'>Number moves: {getNumberMoves(game.rawMoves)}</Text>
         <View className='flex grow flex-row justify-center align-middle'>
           <ChessItemButtonChoice
             href={('/game/(tabs)/listen/' + game.id) as Href}
