@@ -4,6 +4,7 @@ import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useEffe
 
 import { fetchGamesForUser } from '@/api/lichess'
 import { GameAttributes, LichessGame } from '@/types/lichess'
+import { getStrippedPgn } from '@/utils/chess'
 
 interface LoadedGamesContextType {
   games: GameAttributes[]
@@ -24,7 +25,7 @@ export const LoadedGamesProvider = ({ children }: { children: ReactNode }) => {
           type: 'featured',
           lastFen: game.lastFen,
           rawMoves: game.moves,
-          strippedPgn: game.pgn,
+          strippedPgn: getStrippedPgn(game.pgn),
         } as GameAttributes
       })
       setGames(games)
