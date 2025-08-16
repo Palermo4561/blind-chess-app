@@ -18,7 +18,13 @@ export default function RootLayout() {
       <SettingsProvider>
         <GestureHandlerRootView>
           <Stack>
-            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+            <Stack.Screen
+              name='(tabs)'
+              options={{
+                title: 'Home',
+                headerShown: false,
+              }}
+            />
           </Stack>
           <StatusBar style='auto' />
         </GestureHandlerRootView>

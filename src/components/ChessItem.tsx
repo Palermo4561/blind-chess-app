@@ -1,5 +1,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { Link } from 'expo-router'
+import type { Href, LinkProps } from 'expo-router'
 import React, { Suspense } from 'react'
 import { Text, View, ViewProps } from 'react-native'
 import { ChessboardProps } from 'react-native-chessboard/lib/typescript/context/props-context'
@@ -17,21 +19,20 @@ interface ChessItemProps extends ViewProps {
   chessBoardProps?: ChessboardProps
 }
 
-const TempButtonFramework = ({
-  className,
-  title,
-  iconString,
-}: {
-  className?: string
+interface ChessItemButtonChoiceProps extends LinkProps {
   title: string
   iconString: IconProp
-}) => {
+}
+
+const ChessItemButtonChoice = ({ iconString, title, href, className, ...props }: ChessItemButtonChoiceProps) => {
   return (
-    <View className={cn('m-2 flex-1 items-center rounded-xl bg-gray-200', className)}>
-      <View className='my-auto flex flex-col items-center'>
-        <FontAwesomeIcon icon={iconString} color={'black'} size={30} />
-        <Text className='my-auto font-bold text-white'>{title}</Text>
-      </View>
+    <View className={cn('m-2 flex-1 items-center justify-center rounded-xl', className)}>
+      <Link href={href} {...props}>
+        <View className='my-auto flex flex-col items-center'>
+          <FontAwesomeIcon icon={iconString} color={'black'} size={30} />
+          <Text className='my-auto font-bold text-white'>{title}</Text>
+        </View>
+      </Link>
     </View>
   )
 }
@@ -67,8 +68,18 @@ export default function ChessItem({ chessBoardProps, game, className, ...props }
         </View>
         <Text className='mx-auto p-2 text-lg text-white'>Number moves: {getNumberMoves(game)}</Text>
         <View className='flex grow flex-row justify-center align-middle'>
-          <TempButtonFramework title={'Listen'} iconString={'headphones'} className='bg-blue-800' />
-          <TempButtonFramework title={'Train'} iconString={'dumbbell'} className='bg-red-600' />
+          <ChessItemButtonChoice
+            href={('/game/(tabs)/listen/' + game.id) as Href}
+            title={'Listen'}
+            iconString={'headphones'}
+            className='bg-blue-800'
+          />
+          <ChessItemButtonChoice
+            href={('/game/(tabs)/train/' + game.id) as Href}
+            title={'Train'}
+            iconString={'dumbbell'}
+            className='bg-red-600'
+          />
         </View>
       </View>
     </View>
