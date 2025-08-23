@@ -5,7 +5,7 @@ import colors from 'tailwindcss/colors'
 
 import { useLoadedGamesContext } from '@/contexts/LoadedGamesContext'
 import { useSettingsContext } from '@/contexts/SettingsContext'
-import { getMoveArray } from '@/utils/chess'
+import { START_FEN, getMoveArray, pgnToFen } from '@/utils/chess'
 import { readChessMove } from '@/utils/text-to-speech'
 
 const Chessboard = React.lazy(() => import('react-native-chessboard'))
@@ -15,6 +15,7 @@ export default function GameReading() {
   const { games } = useLoadedGamesContext()
   const { voice, extensiveReading } = useSettingsContext()
   const [currentMoveIdx, setCurrentMoveIdx] = useState<number>(0)
+  const [movesMadeString, setMovesMadeString] = useState<string>('')
 
   const chosenGame = games.find((game) => game.id === id)
   if (chosenGame === undefined) throw Error('Game not found')
@@ -30,6 +31,7 @@ export default function GameReading() {
   const readAndUpdateMoveIdx = () => {
     readChessMove(moveText, { voice, extensiveReading })
     setCurrentMoveIdx((prev) => prev + 1)
+    setMovesMadeString((prev) => (prev + ` ${moveText}`).trim())
   }
 
   useEffect(() => {
@@ -38,21 +40,23 @@ export default function GameReading() {
 
   return (
     <View>
-      <Text className='text-gray-500'>Listen to game {id}</Text>
-      <Chessboard
-        boardSize={150}
-        gestureEnabled={false}
-        withLetters={false}
-        withNumbers={false}
-        colors={{
-          black: colors.yellow[800],
-          white: colors.orange[300],
-        }}
-        fen={chosenGame.lastFen}
-      />
-      <Text className='text-white'>Next move to read: {moveText}</Text>
+      <Text className='mx-auto text-xl text-white'>Listen to game {id}</Text>
+      <View className='mx-auto'>
+        <Chessboard
+          key={currentMoveIdx}
+          boardSize={300}
+          gestureEnabled={false}
+          withLetters={false}
+          withNumbers={false}
+          colors={{
+            black: colors.yellow[800],
+            white: colors.orange[300],
+          }}
+          fen={movesMadeString !== '' ? pgnToFen(movesMadeString) : START_FEN}
+        />
+      </View>
       <Text onPress={readAndUpdateMoveIdx} className='bg-blue-400 p-20'>
-        Read the next move
+        Read Next Move
       </Text>
     </View>
   )

@@ -1,5 +1,7 @@
 import { Chess, validateFen } from 'chess.js'
 
+export const START_FEN = new Chess().fen()
+
 export function pgnToFen(pgnString: string): string {
   const chess = new Chess()
   chess.loadPgn(pgnString)
