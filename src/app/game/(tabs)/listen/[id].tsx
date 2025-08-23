@@ -1,14 +1,15 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useLocalSearchParams } from 'expo-router'
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 import { Button, GestureResponderEvent, Text, View, ViewProps } from 'react-native'
+import { ChessboardRef } from 'react-native-chessboard'
 import colors from 'tailwindcss/colors'
 
 import { useLoadedGamesContext } from '@/contexts/LoadedGamesContext'
 import { useSettingsContext } from '@/contexts/SettingsContext'
 import { cn } from '@/lib/utils'
-import { START_FEN, getMoveArray, pgnToFen } from '@/utils/chess'
+import { START_FEN, getExtendedMovesArray, getMoveArray, pgnToFen } from '@/utils/chess'
 import { readChessMove } from '@/utils/text-to-speech'
 
 const Chessboard = React.lazy(() => import('react-native-chessboard'))
@@ -42,24 +43,41 @@ export default function GameReading() {
   const { id } = useLocalSearchParams()
   const { games } = useLoadedGamesContext()
   const { voice, extensiveReading } = useSettingsContext()
-  const [currentMoveIdx, setCurrentMoveIdx] = useState<number>(0)
+
+  const currentMoveIdx = useRef<number>(0)
+  const chessboardRef = useRef<ChessboardRef>(null)
 
   // load game
-  const chosenGame = games.find((game) => game.id === id)
-  if (chosenGame === undefined) throw Error('Game not found')
+  const currentGame = games.find((game) => game.id === id)
+  if (currentGame === undefined) throw Error('Game not found')
   // get a 1D array of moves
-  const gameMovesArray = getMoveArray(chosenGame.strippedPgn)
+  const movesArray = getMoveArray(currentGame.strippedPgn)
+  const gameResult = movesArray.pop() // the final result isn't a valid move, but it's useful info
+  const extendedMovesArray = getExtendedMovesArray(movesArray)
 
   const readMove = () => {
-    readChessMove(gameMovesArray[currentMoveIdx], { voice, extensiveReading })
+    readChessMove(movesArray[currentMoveIdx.current], { voice, extensiveReading })
   }
 
   const updateMoveIndex = (val = 1) => {
-    setCurrentMoveIdx((prev) => Math.max(0, prev + val))
+    if (val === 1) {
+      const move = extendedMovesArray[currentMoveIdx.current]
+      chessboardRef.current?.move({ to: move.to, from: move.from })
+    } else if (val === -1 && currentMoveIdx.current > 0) {
+      const move = extendedMovesArray[currentMoveIdx.current - 1]
+
+      // the undo method doesn't work in react-native-chessboard, and you can't input an invalid move
+      // thus, you have to reset the board to a specific fen and manually highlight
+      chessboardRef.current?.resetBoard(move.before)
+      chessboardRef.current?.highlight({ square: move.to })
+      chessboardRef.current?.highlight({ square: move.from })
+    }
+    currentMoveIdx.current = Math.max(0, currentMoveIdx.current + val)
   }
 
   const resetBoard = () => {
-    setCurrentMoveIdx(0)
+    currentMoveIdx.current = 0
+    chessboardRef.current?.resetBoard()
   }
 
   return (
@@ -67,7 +85,7 @@ export default function GameReading() {
       <Text className='mx-auto text-xl text-white'>Listen to game {id}</Text>
       <View className='mx-auto'>
         <Chessboard
-          key={currentMoveIdx}
+          ref={chessboardRef}
           boardSize={300}
           gestureEnabled={false}
           withLetters={false}
@@ -76,7 +94,6 @@ export default function GameReading() {
             black: colors.yellow[800],
             white: colors.orange[300],
           }}
-          fen={currentMoveIdx !== 0 ? pgnToFen(gameMovesArray.slice(0, currentMoveIdx).join(' ')) : START_FEN}
         />
       </View>
 

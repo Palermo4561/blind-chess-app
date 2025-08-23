@@ -1,4 +1,4 @@
-import { Chess, validateFen } from 'chess.js'
+import { Chess, Move, validateFen } from 'chess.js'
 
 export const START_FEN = new Chess().fen()
 
@@ -33,4 +33,9 @@ export function getMoveArray(strippedPgn: string): string[] {
     .splice(1)
     .map((fullMove) => fullMove.split(' '))
     .reduce((acc, curr) => acc.concat(curr), [])
+}
+
+export function getExtendedMovesArray(moves: string[]): Move[] {
+  const chess = new Chess()
+  return moves.map((move) => chess.move(move))
 }
