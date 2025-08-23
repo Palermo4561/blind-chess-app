@@ -1,14 +1,42 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useState } from 'react'
-import { Text, View } from 'react-native'
+import { Button, GestureResponderEvent, Text, View, ViewProps } from 'react-native'
 import colors from 'tailwindcss/colors'
 
 import { useLoadedGamesContext } from '@/contexts/LoadedGamesContext'
 import { useSettingsContext } from '@/contexts/SettingsContext'
+import { cn } from '@/lib/utils'
 import { START_FEN, getMoveArray, pgnToFen } from '@/utils/chess'
 import { readChessMove } from '@/utils/text-to-speech'
 
 const Chessboard = React.lazy(() => import('react-native-chessboard'))
+
+interface ChessDictationButtonProps extends ViewProps {
+  iconString: IconProp
+  buttonTitle: string
+  buttonTextColor?: string
+  onButtonPress: (event: GestureResponderEvent) => void
+}
+
+const ChessDictationButton = ({
+  iconString,
+  buttonTitle,
+  buttonTextColor = colors.white,
+  onButtonPress,
+  className,
+  ...props
+}: ChessDictationButtonProps) => {
+  return (
+    <View className={cn('flex flex-row gap-2 rounded-2xl bg-blue-300 p-4', className)} {...props}>
+      <FontAwesomeIcon size={30} color='white' style={{ marginTop: 'auto', marginBottom: 'auto' }} icon={iconString} />
+      <View className='mx-auto'>
+        <Button onPress={onButtonPress} title={buttonTitle} accessibilityLabel={buttonTitle} color={buttonTextColor} />
+      </View>
+    </View>
+  )
+}
 
 export default function GameReading() {
   const { id } = useLocalSearchParams()
@@ -26,8 +54,12 @@ export default function GameReading() {
     readChessMove(gameMovesArray[currentMoveIdx], { voice, extensiveReading })
   }
 
-  const updateMoveIndex = () => {
-    setCurrentMoveIdx((prev) => prev + 1)
+  const updateMoveIndex = (val = 1) => {
+    setCurrentMoveIdx((prev) => Math.max(0, prev + val))
+  }
+
+  const resetBoard = () => {
+    setCurrentMoveIdx(0)
   }
 
   return (
@@ -47,15 +79,31 @@ export default function GameReading() {
           fen={currentMoveIdx !== 0 ? pgnToFen(gameMovesArray.slice(0, currentMoveIdx).join(' ')) : START_FEN}
         />
       </View>
-      <Text
-        onPress={() => {
-          readMove()
-          updateMoveIndex()
-        }}
-        className='bg-blue-400 p-20'
-      >
-        Read Next Move
-      </Text>
+
+      <View className='mx-auto my-5 flex flex-col justify-center gap-3 align-middle'>
+        <ChessDictationButton
+          iconString='forward'
+          buttonTitle='Read next chess move'
+          onButtonPress={() => {
+            readMove()
+            updateMoveIndex()
+          }}
+        />
+        <ChessDictationButton
+          iconString='backward'
+          buttonTitle='Revert one move'
+          onButtonPress={() => {
+            updateMoveIndex(-1)
+          }}
+        />
+        <ChessDictationButton
+          iconString='rotate'
+          buttonTitle='Reset board'
+          onButtonPress={() => {
+            resetBoard()
+          }}
+        />
+      </View>
     </View>
   )
 }
