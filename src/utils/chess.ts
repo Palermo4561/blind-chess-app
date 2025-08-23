@@ -27,9 +27,10 @@ export function getStrippedPgn(fullPgn: string): string {
   return pgnMoves
 }
 
-export function getMoveArray(strippedPgn: string): string[][] {
+export function getMoveArray(strippedPgn: string): string[] {
   return strippedPgn
     .split(/\s*\d+\.\s+/)
     .splice(1)
     .map((fullMove) => fullMove.split(' '))
+    .reduce((acc, curr) => acc.concat(curr), [])
 }

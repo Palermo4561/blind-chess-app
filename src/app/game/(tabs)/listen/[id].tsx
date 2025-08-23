@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import colors from 'tailwindcss/colors'
 
@@ -15,28 +15,20 @@ export default function GameReading() {
   const { games } = useLoadedGamesContext()
   const { voice, extensiveReading } = useSettingsContext()
   const [currentMoveIdx, setCurrentMoveIdx] = useState<number>(0)
-  const [movesMadeString, setMovesMadeString] = useState<string>('')
 
+  // load game
   const chosenGame = games.find((game) => game.id === id)
   if (chosenGame === undefined) throw Error('Game not found')
+  // get a 1D array of moves
   const gameMovesArray = getMoveArray(chosenGame.strippedPgn)
 
-  const getChessMoveString = useCallback(
-    () => gameMovesArray[Math.floor(currentMoveIdx / 2)][currentMoveIdx % 2],
-    [gameMovesArray, currentMoveIdx]
-  )
-
-  const [moveText, setMoveText] = useState<string>(() => getChessMoveString())
-
-  const readAndUpdateMoveIdx = () => {
-    readChessMove(moveText, { voice, extensiveReading })
-    setCurrentMoveIdx((prev) => prev + 1)
-    setMovesMadeString((prev) => (prev + ` ${moveText}`).trim())
+  const readMove = () => {
+    readChessMove(gameMovesArray[currentMoveIdx], { voice, extensiveReading })
   }
 
-  useEffect(() => {
-    setMoveText(() => getChessMoveString())
-  }, [getChessMoveString])
+  const updateMoveIndex = () => {
+    setCurrentMoveIdx((prev) => prev + 1)
+  }
 
   return (
     <View>
@@ -52,10 +44,16 @@ export default function GameReading() {
             black: colors.yellow[800],
             white: colors.orange[300],
           }}
-          fen={movesMadeString !== '' ? pgnToFen(movesMadeString) : START_FEN}
+          fen={currentMoveIdx !== 0 ? pgnToFen(gameMovesArray.slice(0, currentMoveIdx).join(' ')) : START_FEN}
         />
       </View>
-      <Text onPress={readAndUpdateMoveIdx} className='bg-blue-400 p-20'>
+      <Text
+        onPress={() => {
+          readMove()
+          updateMoveIndex()
+        }}
+        className='bg-blue-400 p-20'
+      >
         Read Next Move
       </Text>
     </View>
